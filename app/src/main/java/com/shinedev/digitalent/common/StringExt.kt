@@ -7,3 +7,6 @@ inline val CharSequence?.isValidEmail: Boolean
 
 inline val CharSequence?.isValidPassword: Boolean
     get() = !isNullOrBlank() && length > 5
+
+inline val CharSequence?.isValidName: Boolean
+    get() = !isNullOrBlank() && length > 3

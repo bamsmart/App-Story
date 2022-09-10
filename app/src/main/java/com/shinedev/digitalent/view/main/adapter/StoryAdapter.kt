@@ -6,12 +6,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.shinedev.digitalent.R
+import com.shinedev.digitalent.common.OnItemClickListener
 import com.shinedev.digitalent.databinding.ItemStoryBinding
 import com.shinedev.digitalent.view.main.StoryResponse
 import com.shinedev.digitalent.view.withDateFormat
 
 class StoryAdapter :
     RecyclerView.Adapter<StoryAdapter.StoryViewHolder>() {
+
+    lateinit var onItemClickListener: OnItemClickListener
 
     private var data: List<StoryResponse> = listOf()
 
@@ -32,13 +35,17 @@ class StoryAdapter :
                 val context = holder.itemView.context
                 Glide.with(context)
                     .load(photoUrl)
-                    .into(ivPhoto)
-                tvName.text = name
-                tvDescription.text = description
-                tvLastUpdate.text = context.getString(
+                    .into(ivItemPhoto)
+                tvItemName.text = name
+                tvItemDescription.text = description
+                tvItemLastUpdate.text = context.getString(
                     R.string.uploaded_at,
                     createdAt.withDateFormat()
                 )
+
+                holder.itemView.setOnClickListener {
+                    onItemClickListener.onItemClick(data[position], position)
+                }
             }
         }
     }

@@ -1,9 +1,8 @@
-package com.shinedev.digitalent.view.story
+package com.shinedev.digitalent.view.upload
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.graphics.Bitmap
+import android.net.Uri
+import androidx.lifecycle.*
 import com.shinedev.digitalent.network.BaseResponse
 import com.shinedev.digitalent.network.NetworkBuilder
 import com.shinedev.digitalent.pref.AuthPreference
@@ -21,6 +20,43 @@ class UploadStoryViewModel(private val pref: AuthPreference) : ViewModel() {
 
     private val _result = MutableLiveData<BaseResponse>()
     val result: LiveData<BaseResponse> = _result
+
+    private val _uri = MutableLiveData<Uri>()
+    val uri: LiveData<Uri> = _uri
+
+    private val _bitmap = MutableLiveData<Bitmap>()
+    val bitmap: LiveData<Bitmap> = _bitmap
+
+    private val _enableUpload = MediatorLiveData<Boolean>()
+    val enableUpload: LiveData<Boolean> = _enableUpload
+
+    init {
+        _enableUpload.addSource(uri) { uri ->
+            _enableUpload.value =
+                checkUriOrBitmap(
+                    uri = uri,
+                    bitmap = _bitmap.value
+                )
+        }
+        _enableUpload.addSource(bitmap) { bitmap ->
+            _enableUpload.value =
+                checkUriOrBitmap(
+                    uri = _uri.value,
+                    bitmap = bitmap
+                )
+        }
+    }
+
+    private fun checkUriOrBitmap(uri: Uri?, bitmap: Bitmap?): Boolean =
+        (uri != null) || (bitmap != null)
+
+    fun setUri(uri: Uri) {
+        _uri.value = uri
+    }
+
+    fun setBitmap(bitmap: Bitmap) {
+        _bitmap.value = bitmap
+    }
 
     fun addNewStory(
         photo: MultipartBody.Part,

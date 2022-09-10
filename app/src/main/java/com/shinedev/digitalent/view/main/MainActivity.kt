@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -12,11 +13,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shinedev.digitalent.R
 import com.shinedev.digitalent.ViewModelWithPrefFactory
+import com.shinedev.digitalent.common.OnItemClickListener
 import com.shinedev.digitalent.databinding.ActivityMainBinding
 import com.shinedev.digitalent.pref.AuthPreference
+import com.shinedev.digitalent.view.detail.DetailStoryActivity
+import com.shinedev.digitalent.view.detail.DetailStoryActivity.Companion.EXT_STORY_DATA
 import com.shinedev.digitalent.view.login.LoginActivity
 import com.shinedev.digitalent.view.main.adapter.StoryAdapter
-import com.shinedev.digitalent.view.story.UploadStoryActivity
+import com.shinedev.digitalent.view.upload.UploadStoryActivity
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = AuthPreference.AUTH_PREFERENCE)
 
@@ -51,6 +55,16 @@ class MainActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = storyAdapter
         }
+        storyAdapter.onItemClickListener = object : OnItemClickListener {
+            override fun onItemClick(item: Any, position: Int) {
+                val data = item as StoryResponse
+
+                val intent = Intent(this@MainActivity, DetailStoryActivity::class.java).apply {
+                    putExtra(EXT_STORY_DATA, data)
+                }
+                startActivity(intent)
+            }
+        }
     }
 
     private fun setupAction() = with(binding) {
@@ -67,14 +81,16 @@ class MainActivity : AppCompatActivity() {
             setNavigationOnClickListener { onBackPressed() }
             setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
-                    R.id.localization -> {
+                    R.id.action_localization -> {
                         startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
                     }
-                    R.id.logout -> {
+                    R.id.action_logout -> {
                         viewModel.logout()
-                        val intent = Intent(this@MainActivity, LoginActivity::class.java).apply {
-                            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        }
+                        val intent =
+                            Intent(this@MainActivity, LoginActivity::class.java).apply {
+                                flags =
+                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            }
                         startActivity(intent)
                         finish()
                     }
@@ -88,5 +104,11 @@ class MainActivity : AppCompatActivity() {
         viewModel.listStory.observe(this@MainActivity) {
             storyAdapter.updateListData(it)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("MainActivity","onResume")
+        viewModel.getListStory()
     }
 }

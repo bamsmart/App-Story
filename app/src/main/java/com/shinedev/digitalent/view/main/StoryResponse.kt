@@ -1,13 +1,16 @@
 package com.shinedev.digitalent.view.main
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import com.shinedev.digitalent.network.BaseResponse
+import kotlinx.parcelize.Parcelize
 
 data class ListStoryResponse(
     @field:SerializedName("listStory")
     val stories: List<StoryResponse> = listOf()
 ) : BaseResponse()
 
+@Parcelize
 data class StoryResponse(
     @field:SerializedName("id")
     val id: String,
@@ -29,4 +32,4 @@ data class StoryResponse(
 
     @field:SerializedName("lon")
     val lon: Double
-)
+) : Parcelable

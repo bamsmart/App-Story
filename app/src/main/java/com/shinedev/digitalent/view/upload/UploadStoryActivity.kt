@@ -1,12 +1,15 @@
-package com.shinedev.digitalent.view.story
+package com.shinedev.digitalent.view.upload
 
 import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -16,12 +19,13 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
 import com.shinedev.digitalent.ViewModelWithPrefFactory
-import com.shinedev.digitalent.databinding.ActivityUploadStoryBinding
-import com.shinedev.digitalent.pref.AuthPreference
 import com.shinedev.digitalent.common.reduceFileImage
 import com.shinedev.digitalent.common.rotateBitmap
 import com.shinedev.digitalent.common.uriToFile
+import com.shinedev.digitalent.databinding.ActivityUploadStoryBinding
+import com.shinedev.digitalent.pref.AuthPreference
 import com.shinedev.digitalent.view.camera.CameraActivity
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -66,12 +70,66 @@ class UploadStoryActivity : AppCompatActivity() {
                 ViewModelWithPrefFactory(pref)
             )[UploadStoryViewModel::class.java]
         setupAction()
+        observeData()
+    }
+
+    private fun observeData() = with(binding) {
+        val owner = this@UploadStoryActivity
+        viewModel.apply {
+            bitmap.observe(owner) {
+                it?.let { bitmap ->
+                    ivPreview.setImageBitmap(bitmap)
+                }
+            }
+            uri.observe(owner) {
+                it?.let { uri ->
+                    ivPreview.setImageURI(uri)
+                }
+            }
+            enableUpload.observe(owner) {
+                it?.let { enable ->
+                    Log.d("xxx", "isEnable = $enable")
+                    uploadButton.isEnabled = enable
+                }
+            }
+            result.observe(owner) {
+                it?.let { result ->
+                    if (!result.error) {
+                        Toast.makeText(
+                            this@UploadStoryActivity,
+                            "Story berhasil dibuat",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        finish()
+                    } else {
+                        uploadButton.setLoading(false)
+                        val snackBar = Snackbar.make(
+                            binding.root, "Gagal mengupload data",
+                            Snackbar.LENGTH_LONG
+                        ).setAction("Action", null)
+                        snackBar.setActionTextColor(Color.RED)
+
+                        val snackBarView = snackBar.view
+                        snackBarView.setBackgroundColor(Color.CYAN)
+                        val textView =
+                            snackBarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
+                        textView.setTextColor(Color.BLUE)
+                        snackBar.show()
+                    }
+                }
+            }
+        }
     }
 
     private fun setupAction() = with(binding) {
         cameraXButton.setOnClickListener { startCameraX() }
         galleryButton.setOnClickListener { startGallery() }
-        uploadButton.setOnClickListener { uploadImage() }
+        uploadButton.apply {
+            setOnClickListener {
+                setLoading(true)
+                uploadImage()
+            }
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -121,8 +179,7 @@ class UploadStoryActivity : AppCompatActivity() {
                 BitmapFactory.decodeFile(getFile?.path),
                 isBackCamera
             )
-
-            binding.ivPreview.setImageBitmap(result)
+            viewModel.setBitmap(result)
         }
     }
 
@@ -135,8 +192,7 @@ class UploadStoryActivity : AppCompatActivity() {
             val myFile = uriToFile(selectedImg, this@UploadStoryActivity)
 
             getFile = myFile
-
-            binding.ivPreview.setImageURI(selectedImg)
+            viewModel.setUri(selectedImg)
         }
     }
 
@@ -144,7 +200,7 @@ class UploadStoryActivity : AppCompatActivity() {
         if (getFile != null) {
             val file = reduceFileImage(getFile as File)
             val description =
-                "Ini adalah deksripsi gambar".toRequestBody("text/plain".toMediaType())
+                binding.edAddDescription.getStringText().toRequestBody("text/plain".toMediaType())
             val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
             val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
                 "photo",

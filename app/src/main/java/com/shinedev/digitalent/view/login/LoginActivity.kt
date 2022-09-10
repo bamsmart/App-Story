@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -15,6 +16,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.shinedev.digitalent.ViewModelWithPrefFactory
 import com.shinedev.digitalent.databinding.ActivityLoginBinding
 import com.shinedev.digitalent.pref.AuthPreference
@@ -59,7 +61,15 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupAction() = with(binding) {
+        edLoginEmail.textChangedListener(lifecycleScope) {
+            viewModel.isValidEmail(edLoginEmail.getIsValidValue())
+        }
+        edLoginPassword.textChangedListener(lifecycleScope) {
+            viewModel.isValidPassword(edLoginPassword.getIsValidValue())
+        }
+
         btnLogin.setOnClickListener {
+            btnLogin.setLoading(true)
             viewModel.login(LoginRequest(email = "bamsmart.id@gmail.com", password = "kodok1234"))
         }
         tvSignup.setOnClickListener {
@@ -76,6 +86,13 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "ada error nih ${it.message}", Toast.LENGTH_LONG).show()
             }
         }
+
+        viewModel.isValidInput.observe(this) {
+            Log.d("LoginActivity", "observe input $it")
+            binding.btnLogin.isEnabled = it
+        }
+
+
     }
 
 

@@ -16,6 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/gl_2"
+        android:contentDescription="@string/text_register_image"
         app:srcCompat="@drawable/image_signup" />
 
     <TextView
@@ -36,127 +37,60 @@
         app:layout_constraintTop_toTopOf="@+id/gl_horizontal"
         tools:alpha="1" />
 
-    <TextView
-        android:id="@+id/tv_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:alpha="0"
-        android:text="@string/name"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title"
-        tools:alpha="1" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/field_name"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <com.shinedev.digitalent.common.widget.CustomTextInputField
+        android:id="@+id/ed_register_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:alpha="0"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="24dp"
+        android:inputType="textPersonName"
+        app:hint="@string/login_name_input_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_name"
-        app:startIconDrawable="@drawable/ic_baseline_person_24"
-        tools:alpha="1">
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:startIcon="@drawable/ic_baseline_person_24" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text"
-            app:passwordToggleEnabled="true" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/tv_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:alpha="0"
-        android:text="@string/email"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/field_name"
-        tools:alpha="1" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/field_email"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <com.shinedev.digitalent.common.widget.CustomTextInputField
+        android:id="@+id/ed_register_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:alpha="0"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="24dp"
+        android:inputType="textEmailAddress"
+        app:hint="@string/login_email_input_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_email"
-        app:startIconDrawable="@drawable/ic_baseline_email_24"
-        tools:alpha="1">
+        app:layout_constraintTop_toBottomOf="@id/ed_register_name"
+        app:startIcon="@drawable/ic_baseline_email_24" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textEmailAddress" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/tv_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:alpha="0"
-        android:text="@string/password"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/field_email"
-        tools:alpha="1" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/field_password"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <com.shinedev.digitalent.common.widget.CustomTextInputField
+        android:id="@+id/ed_register_password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:alpha="0"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="24dp"
+        android:inputType="textPassword"
+        app:hint="@string/login_password_input_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_password"
+        app:layout_constraintTop_toBottomOf="@id/ed_register_email"
         app:passwordToggleEnabled="true"
-        app:startIconDrawable="@drawable/ic_baseline_lock_24"
-        tools:alpha="1">
+        app:startIcon="@drawable/ic_baseline_lock_24" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPassword"
-            app:passwordToggleEnabled="true" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <Button
+    <com.shinedev.digitalent.common.widget.CustomSubmitButton
         android:id="@+id/btn_signup"
+        style="@style/ButtonBigPrimary"
         android:layout_width="0dp"
-        android:layout_height="64dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:alpha="0"
-        android:backgroundTint="@color/navi"
+        android:enabled="false"
         android:text="@string/signup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/field_password"
+        app:layout_constraintTop_toBottomOf="@+id/ed_register_password"
         tools:alpha="1" />
 
     <androidx.constraintlayout.widget.Guideline

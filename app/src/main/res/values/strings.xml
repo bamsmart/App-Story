@@ -17,20 +17,25 @@
     <string name="greeting">Halo %1$s,</string>
     <string name="logout">Keluar</string>
 
-    <string name="camera_x">CameraX</string>
     <string name="camera">Kamera</string>
     <string name="gallery">Galeri</string>
     <string name="upload">Unggah</string>
     <string name="image_view">image view</string>
+    <string name="image_preview">Story image preview</string>
     <string name="add_story">Add Story</string>
     <string name="list_story">List Story</string>
+    <string name="detail_story">Detail Story</string>
 
     <string name="localization_setting">Pengaturan Pelokalan</string>
     <string name="uploaded_at">Diunggah pada %1$s</string>
     <string name="error_format_email">Format email yang Anda masukan salah</string>
-    <string name="error_length_password">Panjang password minimal 5 karakter</string>
+    <string name="error_length_password">Panjang password minimal 6 karakter</string>
+    <string name="error_length_name">Panjang nama minimal 3 karakter</string>
 
-
+    <string name="login_name_input_hint">Masukkan nama lengkap</string>
     <string name="login_email_input_hint">Masukkan email</string>
     <string name="login_password_input_hint">Masukkan password</string>
+    <string name="text_register_image">register</string>
+
+    <string name="type_story_description">Tuliskan cerita kamu hari ini</string>
 </resources>

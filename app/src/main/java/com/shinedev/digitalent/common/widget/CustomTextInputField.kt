@@ -28,7 +28,7 @@ import kotlinx.coroutines.FlowPreview
 
 @Suppress("MemberVisibilityCanBePrivate")
 @SuppressLint("CustomViewStyleable")
-class CustomInputField @JvmOverloads constructor(
+class CustomTextInputField @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -36,7 +36,6 @@ class CustomInputField @JvmOverloads constructor(
 
     private val colorWhite by lazy { ContextCompat.getColor(context, android.R.color.white) }
     private val colorMistyLight by lazy { ContextCompat.getColor(context, R.color.colorMistyLight) }
-    private var isValidEmail = false
     private var binding =
         LayoutInputFieldBinding.inflate(LayoutInflater.from(context), this)
 
@@ -69,10 +68,6 @@ class CustomInputField @JvmOverloads constructor(
     }
 
     fun setMaxLength(Length: Int) {
-        binding.outlinedTextField.editText?.filters = arrayOf<InputFilter>(LengthFilter(Length))
-    }
-
-    fun setMinLength(Length: Int) {
         binding.outlinedTextField.editText?.filters = arrayOf<InputFilter>(LengthFilter(Length))
     }
 
@@ -115,6 +110,8 @@ class CustomInputField @JvmOverloads constructor(
 
     fun getStringText(): String = binding.etInputText.text.toString()
 
+    fun getIsValidValue(): Boolean = binding.tvError.text.toString().isEmpty()
+
     fun setInputType(type: Int) = with(binding.etInputText) {
         inputType = type
         if ((type and InputType.TYPE_TEXT_VARIATION_PASSWORD) == InputType.TYPE_TEXT_VARIATION_PASSWORD) {
@@ -128,10 +125,11 @@ class CustomInputField @JvmOverloads constructor(
         }
         if (isFocusable) {
             doOnTextChanged { text, _, _, _ ->
-                if ((type and InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS) == InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS) {
+                if ((type and InputType.TYPE_TEXT_VARIATION_PERSON_NAME) == InputType.TYPE_TEXT_VARIATION_PERSON_NAME) {
+                    checkValidName(text)
+                } else if ((type and InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS) == InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS) {
                     checkValidEmail(text)
-                }
-                if ((type and InputType.TYPE_TEXT_VARIATION_PASSWORD) == InputType.TYPE_TEXT_VARIATION_PASSWORD) {
+                } else if ((type and InputType.TYPE_TEXT_VARIATION_PASSWORD) == InputType.TYPE_TEXT_VARIATION_PASSWORD) {
                     checkValidPassword(text)
                 }
                 showPrimaryIcon(!text.isNullOrEmpty())
@@ -239,20 +237,20 @@ class CustomInputField @JvmOverloads constructor(
     fun textChangedListener(
         scope: CoroutineScope,
         delayInMillis: Long = 50L,
-        listener: (String, Boolean) -> Unit
+        listener: (String) -> Unit
     ) {
         binding.outlinedTextField.editText?.onInputText(
             scope = scope,
             delayInMillis = delayInMillis,
             listener = {
                 showPrimaryIcon(it.isNotEmpty())
-                listener(it, isValidEmail)
+                listener(it)
             }
         )
     }
 
     private fun checkValidEmail(email: CharSequence?) {
-        this.isValidEmail = email.isValidEmail.also {
+        email.isValidEmail.also {
             val errorMessage =
                 if (it or email.isNullOrBlank()) null else resources.getString(R.string.error_format_email)
             setErrorMessage(errorMessage)
@@ -260,9 +258,17 @@ class CustomInputField @JvmOverloads constructor(
     }
 
     private fun checkValidPassword(password: CharSequence?) {
-        this.isValidEmail = password.isValidPassword.also {
+        password.isValidPassword.also {
             val errorMessage =
                 if (it or password.isNullOrBlank()) null else resources.getString(R.string.error_length_password)
+            setErrorMessage(errorMessage)
+        }
+    }
+
+    private fun checkValidName(name: CharSequence?) {
+        name.isValidName.also {
+            val errorMessage =
+                if (it or name.isNullOrBlank()) null else resources.getString(R.string.error_length_name)
             setErrorMessage(errorMessage)
         }
     }

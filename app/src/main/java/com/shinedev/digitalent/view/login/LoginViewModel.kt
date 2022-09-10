@@ -1,10 +1,7 @@
 package com.shinedev.digitalent.view.login
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.shinedev.digitalent.network.NetworkBuilder
 import com.shinedev.digitalent.pref.AuthPreference
 import com.shinedev.digitalent.view.login.service.LoginRequest
@@ -14,12 +11,39 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
 class LoginViewModel(private val pref: AuthPreference) : ViewModel() {
 
     private val authService = NetworkBuilder.createService(UserAuthApi::class.java)
 
     private val _result = MutableLiveData<LoginResponse>()
     val result: LiveData<LoginResponse> = _result
+
+    private val _isValidEmail = MutableLiveData<Boolean>()
+    private val isValidEmail: LiveData<Boolean> = _isValidEmail
+
+    private val _isValidPassword = MutableLiveData<Boolean>()
+    private val isValidPassword: LiveData<Boolean> = _isValidPassword
+
+    private val _isValidInput: MediatorLiveData<Boolean> = MediatorLiveData()
+    val isValidInput: LiveData<Boolean> = _isValidInput
+
+    init {
+        _isValidInput.addSource(isValidEmail) { isValidEmail ->
+            _isValidInput.value =
+                checkFormInput(
+                    isValidEmail = isValidEmail,
+                    isValidPassword = isValidPassword.value ?: false
+                )
+        }
+        _isValidInput.addSource(isValidPassword) { isValidPassword ->
+            _isValidInput.value =
+                checkFormInput(
+                    isValidEmail = isValidEmail.value ?: false,
+                    isValidPassword = isValidPassword
+                )
+        }
+    }
 
     fun login(request: LoginRequest) {
         viewModelScope.launch {
@@ -52,6 +76,17 @@ class LoginViewModel(private val pref: AuthPreference) : ViewModel() {
             })
         }
     }
+
+    fun isValidEmail(isValid: Boolean) {
+        _isValidEmail.value = isValid
+    }
+
+    fun isValidPassword(isValid: Boolean) {
+        _isValidPassword.value = isValid
+    }
+
+    private fun checkFormInput(isValidEmail: Boolean, isValidPassword: Boolean) =
+        isValidEmail && isValidPassword
 
     companion object {
         private const val TAG = "LoginViewModel"

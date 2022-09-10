@@ -15,7 +15,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import com.shinedev.digitalent.common.createFile
 import com.shinedev.digitalent.databinding.ActivityCameraBinding
-import com.shinedev.digitalent.view.story.UploadStoryActivity
+import com.shinedev.digitalent.view.upload.UploadStoryActivity
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 

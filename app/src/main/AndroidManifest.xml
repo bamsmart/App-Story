@@ -21,13 +21,14 @@
         android:theme="@style/MainAppTheme"
         tools:targetApi="31">
         <activity
-            android:name=".view.story.UploadStoryActivity"
+            android:name=".view.detail.DetailStoryActivity"
             android:exported="false" />
-
+        <activity
+            android:name=".view.upload.UploadStoryActivity"
+            android:exported="false" />
         <activity
             android:name=".view.camera.CameraActivity"
             android:exported="false" />
-
         <activity
             android:name=".view.splash.SplashActivity"
             android:exported="true"

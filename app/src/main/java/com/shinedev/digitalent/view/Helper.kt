@@ -13,3 +13,13 @@ fun String.withDateFormat(): String {
         this
     }
 }
+
+/*
+fun getErrorBody(response: ): BaseResponse {
+    return if (response.code() != 502) {
+        val jsonObject = response.errorBody()?.string()?.let { JSONObject(it) }
+        Gson().fromJson(jsonObject.toString(), BaseResponse::class.java)
+    } else {
+        return BaseResponse(true, "Bad Gateway")
+    }
+}*/

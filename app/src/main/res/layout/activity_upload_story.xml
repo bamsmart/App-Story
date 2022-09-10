@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.story.UploadStoryActivity">
+    tools:context=".view.upload.UploadStoryActivity">
 
     <ImageView
         android:id="@+id/ivPreview"
@@ -23,43 +23,55 @@
 
     <Button
         android:id="@+id/cameraXButton"
+        style="@style/ButtonBigPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginHorizontal="8dp"
         android:elevation="2dp"
+        android:drawableLeft="@android:drawable/ic_menu_camera"
         android:scaleType="fitCenter"
-        android:text="@string/camera_x"
+        android:text="@string/camera"
         app:layout_constraintEnd_toStartOf="@+id/galleryButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivPreview"
-        app:layout_constraintVertical_bias="1" />
+        app:layout_constraintVertical_bias="1"
+        tools:ignore="RtlHardcoded" />
 
     <Button
         android:id="@+id/galleryButton"
+        style="@style/ButtonBigPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginHorizontal="8dp"
         android:text="@string/gallery"
+        android:drawableLeft="@android:drawable/ic_menu_gallery"
         app:layout_constraintBottom_toBottomOf="@+id/cameraXButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/cameraXButton" />
+        app:layout_constraintStart_toEndOf="@+id/cameraXButton"
+        tools:ignore="RtlHardcoded" />
 
-    <EditText
-        android:id="@+id/et_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <com.shinedev.digitalent.common.widget.CustomTextInputField
+        android:id="@+id/ed_add_description"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="24dp"
+        android:inputType="textMultiLine"
+        app:hint="@string/type_story_description"
         app:layout_constraintBottom_toTopOf="@+id/uploadButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cameraXButton" />
 
-    <Button
+    <com.shinedev.digitalent.common.widget.CustomSubmitButton
         android:id="@+id/uploadButton"
+        style="@style/ButtonBigPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:enabled="false"
         android:layout_marginBottom="8dp"
         android:text="@string/upload"
         app:layout_constraintBottom_toBottomOf="parent"
