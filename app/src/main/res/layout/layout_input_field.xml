@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_lead_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="12dp"
+        android:minWidth="30dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@id/outlinedTextField"
+        app:layout_constraintEnd_toStartOf="@id/outlinedTextField"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/outlinedTextField" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/outlinedTextField"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_input_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            tools:ignore="SpeakableTextPresentCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_error"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/colorRed"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/outlinedTextField"
+        app:lineHeight="18dp"
+        tools:text="Error" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginVertical="12dp"
+        android:layout_marginTop="6dp"
+        android:minHeight="20dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/outlinedTextField"
+        app:layout_constraintEnd_toStartOf="@id/iv_secondary"
+        app:layout_constraintTop_toTopOf="@id/outlinedTextField" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_secondary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="12dp"
+        android:layout_marginTop="6dp"
+        android:minHeight="20dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/outlinedTextField"
+        app:layout_constraintEnd_toEndOf="@id/outlinedTextField"
+        app:layout_constraintTop_toTopOf="@id/outlinedTextField" />
+
+</merge>

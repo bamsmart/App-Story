@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="InputField">
+        <attr name="label" format="string" />
+        <attr name="hint" format="string" />
+        <attr name="helper" format="string" />
+        <attr name="errorMessage" format="string" />
+        <attr name="isFocusable" format="boolean" />
+        <attr name="primaryIcon" format="reference" />
+        <attr name="secondaryIcon" format="reference" />
+        <attr name="leadIcon" format="reference" />
+        <attr name="startIcon" format="reference" />
+        <attr name="android:text" />
+        <attr name="android:inputType" />
+        <attr name="android:imeOptions" />
+        <attr name="android:enabled" />
+        <attr name="android:maxLength" />
+    </declare-styleable>
+</resources>
