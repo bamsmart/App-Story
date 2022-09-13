@@ -1,20 +1,26 @@
 package com.shinedev.digitalent.view.main.adapter
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.shinedev.digitalent.R
-import com.shinedev.digitalent.common.OnItemClickListener
+import com.shinedev.digitalent.Transition.DESCRIPTION
+import com.shinedev.digitalent.Transition.NAME
+import com.shinedev.digitalent.Transition.PROFILE
 import com.shinedev.digitalent.databinding.ItemStoryBinding
+import com.shinedev.digitalent.view.detail.DetailStoryActivity
+import com.shinedev.digitalent.view.detail.DetailStoryActivity.Companion.EXT_STORY_DATA
 import com.shinedev.digitalent.view.main.StoryResponse
 import com.shinedev.digitalent.view.withDateFormat
 
-class StoryAdapter :
+class StoryAdapter(private val activity: Activity) :
     RecyclerView.Adapter<StoryAdapter.StoryViewHolder>() {
-
-    lateinit var onItemClickListener: OnItemClickListener
 
     private var data: List<StoryResponse> = listOf()
 
@@ -44,7 +50,17 @@ class StoryAdapter :
                 )
 
                 holder.itemView.setOnClickListener {
-                    onItemClickListener.onItemClick(data[position], position)
+                    val intent = Intent(context, DetailStoryActivity::class.java)
+                    intent.putExtra(EXT_STORY_DATA, data[position])
+
+                    val optionsCompat: ActivityOptionsCompat =
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(
+                            activity,
+                            Pair(ivItemPhoto, PROFILE),
+                            Pair(tvItemName, NAME),
+                            Pair(tvItemDescription, DESCRIPTION)
+                        )
+                    context.startActivity(intent, optionsCompat.toBundle())
                 }
             }
         }

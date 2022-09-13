@@ -38,4 +38,12 @@
     <string name="text_register_image">register</string>
 
     <string name="type_story_description">Tuliskan cerita kamu hari ini</string>
+
+    <string name="title_empty_data">Oops…!!! Data tidak tersedia.</string>
+    <string name="desc_empty_data">Saat ini, sistem tidak dapat menyajikan data. Tenang, coba lagi beberapa saat lagi.</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">This is an app widget description</string>
+
+    <string name="title_collection_widget">Stories Apps</string>
 </resources>

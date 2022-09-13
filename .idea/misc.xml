@@ -13,6 +13,7 @@
         <entry key="app/src/main/res/drawable/ic_capture.xml" value="0.1375" />
         <entry key="app/src/main/res/drawable/ic_place_holder.xml" value="0.1375" />
         <entry key="app/src/main/res/drawable/news_avd_v02.xml" value="0.1155" />
+        <entry key="app/src/main/res/drawable/vector_empty_data.xml" value="0.1375" />
         <entry key="app/src/main/res/drawable/vector_eye_close.xml" value="0.1375" />
         <entry key="app/src/main/res/font/inter.xml" value="0.1296875" />
         <entry key="app/src/main/res/layout/activity_camera.xml" value="0.12708333333333333" />
@@ -22,9 +23,13 @@
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.27447916666666666" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.12708333333333333" />
         <entry key="app/src/main/res/layout/activity_upload_story.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/collection_widget_list_item.xml" value="0.335" />
         <entry key="app/src/main/res/layout/email_input_field.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_story.xml" value="0.25" />
         <entry key="app/src/main/res/layout/layout_input_field.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/stories_widget.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/view_empty_data.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/widget_item.xml" value="0.21944444444444444" />
         <entry key="app/src/main/res/menu/menu_home.xml" value="0.12708333333333333" />
         <entry key="app/src/main/res/menu/menu_localization.xml" value="0.1" />
       </map>

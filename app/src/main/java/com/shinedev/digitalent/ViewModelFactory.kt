@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.shinedev.digitalent.pref.AuthPreference
 import com.shinedev.digitalent.view.detail.DetailStoryViewModel
 import com.shinedev.digitalent.view.login.LoginViewModel
-import com.shinedev.digitalent.view.main.MainViewModel
 import com.shinedev.digitalent.view.register.RegisterViewModel
 import com.shinedev.digitalent.view.upload.UploadStoryViewModel
 
@@ -15,9 +14,6 @@ class ViewModelWithPrefFactory(private val pref: AuthPreference) :
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
-            modelClass.isAssignableFrom(MainViewModel::class.java) -> {
-                MainViewModel(pref) as T
-            }
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(pref) as T
             }
