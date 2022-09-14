@@ -11,25 +11,32 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
-import com.shinedev.digitalent.ViewModelFactory
+import com.shinedev.digitalent.R
+import com.shinedev.digitalent.data.register.RegisterRequest
 import com.shinedev.digitalent.databinding.ActivityRegisterBinding
 import com.shinedev.digitalent.network.BaseResponse
 
 
 class RegisterActivity : AppCompatActivity() {
-    lateinit var binding: ActivityRegisterBinding
-    lateinit var viewModel: RegisterViewModel
+    private lateinit var binding: ActivityRegisterBinding
+    private lateinit var viewModel: RegisterViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        viewModel =
-            ViewModelProvider(this, ViewModelFactory())[RegisterViewModel::class.java]
 
+        setupViewModel()
         playAnimation()
         setupAction()
         observeData()
+    }
+
+    private fun setupViewModel() {
+        viewModel = ViewModelProvider(
+            this,
+            RegisterViewModelFactory()
+        )[RegisterViewModel::class.java]
     }
 
     private fun setupAction() = with(binding) {
@@ -48,13 +55,17 @@ class RegisterActivity : AppCompatActivity() {
         btnSignup.apply {
             setOnClickListener {
                 setLoading(true)
-                /*val name = etName.toString()
-                val email = etEmail.toString()
-                val password = etPassword.toString()*/
-                val name = "bams"
-                val email = "bamsmart.id@gmail.com"
-                val password = "kodok1234"
-                viewModel.signup(RegisterRequest(name = name, email = email, password = password))
+                val txtName = edRegisterName.getStringText()
+                val txtEmail = edRegisterEmail.getStringText()
+                val txtPassword = edRegisterPassword.getStringText()
+
+                viewModel.signup(
+                    RegisterRequest(
+                        name = txtName,
+                        email = txtEmail,
+                        password = txtPassword
+                    )
+                )
             }
         }
     }
@@ -71,26 +82,25 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun onRegistrationResult(result: BaseResponse) {
         if (!result.error) {
-            Toast.makeText(this, "Akun berhasil dibuat, silahkan login", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.text_account_created), Toast.LENGTH_LONG).show()
             finish()
         } else {
-            showSnackBar()
-            Toast.makeText(this, "ada error nih ${result.message}", Toast.LENGTH_LONG).show()
+            showSnackBar(result.message)
         }
     }
 
-    private fun showSnackBar() {
+    private fun showSnackBar(errorMsg: String) {
         val snackBar = Snackbar.make(
-            binding.root, "Replace with your own action",
+            binding.root, getString(R.string.text_account_error, errorMsg),
             Snackbar.LENGTH_LONG
-        ).setAction("Action", null)
-        snackBar.setActionTextColor(Color.BLUE)
+        ).setAction(getString(R.string.text_try_again), null)
+        snackBar.setActionTextColor(Color.CYAN)
 
         val snackBarView = snackBar.view
-        snackBarView.setBackgroundColor(Color.CYAN)
+        snackBarView.setBackgroundColor(Color.BLUE)
         val textView =
             snackBarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
-        textView.setTextColor(Color.BLUE)
+        textView.setTextColor(Color.WHITE)
         snackBar.show()
     }
 
@@ -102,29 +112,20 @@ class RegisterActivity : AppCompatActivity() {
             repeatMode = ObjectAnimator.REVERSE
         }.start()
 
-        val title = ObjectAnimator.ofFloat(tvTitle, View.ALPHA, 1f).setDuration(500)
-        /*val tvName =
-            ObjectAnimator.ofFloat(tvName, View.ALPHA, 1f).setDuration(500)
+        val title = ObjectAnimator.ofFloat(tvTitle, View.ALPHA, 1f).setDuration(300)
         val fieldName =
-            ObjectAnimator.ofFloat(fieldName, View.ALPHA, 1f).setDuration(500)
-        val tvEmail =
-            ObjectAnimator.ofFloat(tvEmail, View.ALPHA, 1f).setDuration(500)
+            ObjectAnimator.ofFloat(edRegisterName, View.ALPHA, 1f).setDuration(300)
         val fieldEmail =
-            ObjectAnimator.ofFloat(fieldEmail, View.ALPHA, 1f).setDuration(500)
-        val tvPassword =
-            ObjectAnimator.ofFloat(tvPassword, View.ALPHA, 1f).setDuration(500)*/
+            ObjectAnimator.ofFloat(edRegisterEmail, View.ALPHA, 1f).setDuration(300)
         val fieldPassword =
-            ObjectAnimator.ofFloat(edRegisterPassword, View.ALPHA, 1f).setDuration(500)
-        val signup = ObjectAnimator.ofFloat(btnSignup, View.ALPHA, 1f).setDuration(500)
+            ObjectAnimator.ofFloat(edRegisterPassword, View.ALPHA, 1f).setDuration(300)
+        val signup = ObjectAnimator.ofFloat(btnSignup, View.ALPHA, 1f).setDuration(300)
 
         AnimatorSet().apply {
             playSequentially(
                 title,
-                //tvName,
-                //fieldName,
-                //tvEmail,
-                //fieldEmail,
-                //tvPassword,
+                fieldName,
+                fieldEmail,
                 fieldPassword,
                 signup
             )

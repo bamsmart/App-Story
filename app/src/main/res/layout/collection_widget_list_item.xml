@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widgetItemContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:minHeight="@dimen/widget_listview_item_height"
     android:orientation="horizontal"
     android:paddingStart="@dimen/widget_listview_padding_x"
@@ -11,13 +12,37 @@
     android:paddingRight="@dimen/widget_listview_padding_x"
     android:weightSum="2">
 
+    <ImageView
+        android:id="@+id/previewImageView"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:contentDescription="@string/image_preview"
+        android:src="@drawable/vector_logo" />
+
     <TextView
-        android:id="@+id/widgetItemTaskNameLabel"
-        android:layout_width="0dp"
+        android:id="@+id/widgetItemNameLabel"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_weight="1"
+        android:layout_marginStart="8dp"
+        android:layout_toEndOf="@+id/previewImageView"
         android:gravity="start"
-        android:textColor="@color/colorParagraph" />
+        android:textColor="@color/colorHeadline"
+        android:textStyle="bold"
+        tools:text="@tools:sample/full_names" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/widgetItemCreatedTimeLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/widgetItemNameLabel"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="8dp"
+        android:layout_toEndOf="@+id/previewImageView"
+        android:gravity="start"
+        android:textColor="@color/colorParagraph"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        tools:text="@tools:sample/date/hhmmss" />
+
+</RelativeLayout>

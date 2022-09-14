@@ -1,13 +1,12 @@
-package com.shinedev.digitalent.database
+package com.shinedev.digitalent.data.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.shinedev.digitalent.database.dao.StoryDao
-import com.shinedev.digitalent.database.entity.StoryEntity
-import kotlinx.coroutines.CoroutineScope
+import com.shinedev.digitalent.data.database.dao.StoryDao
+import com.shinedev.digitalent.data.database.entity.StoryEntity
 
 @Database(
     version = 1,

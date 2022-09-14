@@ -30,8 +30,11 @@
         <entry key="app/src/main/res/layout/stories_widget.xml" value="0.25" />
         <entry key="app/src/main/res/layout/view_empty_data.xml" value="0.25" />
         <entry key="app/src/main/res/layout/widget_item.xml" value="0.21944444444444444" />
+        <entry key="app/src/main/res/layout/widget_stories.xml" value="0.128125" />
         <entry key="app/src/main/res/menu/menu_home.xml" value="0.12708333333333333" />
         <entry key="app/src/main/res/menu/menu_localization.xml" value="0.1" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
       </map>
     </option>
   </component>

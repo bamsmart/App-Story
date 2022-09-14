@@ -5,8 +5,8 @@ import android.net.Uri
 import androidx.lifecycle.*
 import com.shinedev.digitalent.network.BaseResponse
 import com.shinedev.digitalent.network.NetworkBuilder
-import com.shinedev.digitalent.pref.AuthPreference
-import com.shinedev.digitalent.view.main.StoryService
+import com.shinedev.digitalent.data.pref.AuthPreference
+import com.shinedev.digitalent.domain.story.StoryApiService
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
@@ -16,7 +16,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class UploadStoryViewModel(private val pref: AuthPreference) : ViewModel() {
-    private val storyService = NetworkBuilder.createService(StoryService::class.java)
+    private val storyService = NetworkBuilder.createService(StoryApiService::class.java)
 
     private val _result = MutableLiveData<BaseResponse>()
     val result: LiveData<BaseResponse> = _result
@@ -86,8 +86,6 @@ class UploadStoryViewModel(private val pref: AuthPreference) : ViewModel() {
                             if (responseBody != null && !responseBody.error) {
                                 _result.value = response.body()
                             }
-                        } else {
-
                         }
                     }
 

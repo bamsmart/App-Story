@@ -1,4 +1,4 @@
-package com.shinedev.digitalent.view.main
+package com.shinedev.digitalent.data.story
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
@@ -13,23 +13,23 @@ data class ListStoryResponse(
 @Parcelize
 data class StoryResponse(
     @field:SerializedName("id")
-    val id: String,
+    override val id: String,
 
     @field:SerializedName("name")
-    val name: String,
+    override val name: String,
 
     @field:SerializedName("description")
-    val description: String,
+    override val description: String,
 
     @field:SerializedName("photoUrl")
-    val photoUrl: String,
+    override val photoUrl: String,
 
     @field:SerializedName("createdAt")
-    val createdAt: String,
+    override val createdAt: String,
 
     @field:SerializedName("lat")
-    val lat: Double,
+    override val lat: Double,
 
     @field:SerializedName("lon")
-    val lon: Double
-) : Parcelable
+    override val lon: Double
+) : StoryModel, Parcelable

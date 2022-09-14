@@ -1,4 +1,4 @@
-package com.shinedev.digitalent.view.register
+package com.shinedev.digitalent.data.register
 
 
 data class RegisterRequest(

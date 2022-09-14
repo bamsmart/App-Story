@@ -8,7 +8,6 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.datastore.core.DataStore
@@ -21,12 +20,13 @@ import com.shinedev.digitalent.appwidget.CollectionWidgetProvider
 import com.shinedev.digitalent.appwidget.UpdateWidgetService
 import com.shinedev.digitalent.common.hide
 import com.shinedev.digitalent.common.show
-import com.shinedev.digitalent.database.StoryDatabase
-import com.shinedev.digitalent.database.dao.StoryDao
-import com.shinedev.digitalent.database.entity.StoryEntity
+import com.shinedev.digitalent.data.database.StoryDatabase
+import com.shinedev.digitalent.data.database.dao.StoryDao
+import com.shinedev.digitalent.data.database.entity.StoryEntity
+import com.shinedev.digitalent.data.pref.AuthPreference
 import com.shinedev.digitalent.databinding.ActivityMainBinding
 import com.shinedev.digitalent.databinding.ViewEmptyDataBinding
-import com.shinedev.digitalent.pref.AuthPreference
+import com.shinedev.digitalent.domain.story.StoryRepository
 import com.shinedev.digitalent.view.login.LoginActivity
 import com.shinedev.digitalent.view.main.adapter.StoryAdapter
 import com.shinedev.digitalent.view.upload.UploadStoryActivity
@@ -41,8 +41,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MainViewModel
     lateinit var database: StoryDatabase
-    lateinit var storyDao: StoryDao
-    lateinit var repository: StoryRepository
+    private lateinit var storyDao: StoryDao
+    private lateinit var repository: StoryRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -115,17 +115,24 @@ class MainActivity : AppCompatActivity() {
     private fun observeData() = with(binding) {
         viewModel.apply {
             val owner = this@MainActivity
-            listStory.observe(owner) { it ->
+            listStory.observe(owner) {
                 if (it.isNotEmpty()) {
                     emptyBinding.viewEmpty.hide()
                     storyAdapter.updateListData(it)
-
                     val newData = it.sortedByDescending { sorted -> sorted.createdAt }
                         .filterIndexed { idx, _ -> idx < 5 }.map { story ->
-                            StoryEntity(0, story.name, story.photoUrl)
+                            StoryEntity(
+                                story.id,
+                                story.name,
+                                story.description,
+                                story.photoUrl,
+                                story.createdAt,
+                                0.0,
+                                0.0
+                            )
                         }
                     viewModel.insetUpdatedListStory(newData)
-
+                    sendUpdateStoryList(this@MainActivity)
                 } else {
                     emptyBinding.viewEmpty.show()
                 }
@@ -142,24 +149,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startJob() {
-        val JOB_ID = 2001
         val mServiceComponent = ComponentName(this, UpdateWidgetService::class.java)
         val builder = JobInfo.Builder(JOB_ID, mServiceComponent)
         builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_NONE)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            //builder.setPeriodic(900000) //15 menit
-            builder.setPeriodic(5000) //10 detik
+            builder.setPeriodic(600000)
         } else {
-            builder.setPeriodic(3000) //5 detik
+            builder.setPeriodic(600000)
         }
         val jobScheduler = getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
         jobScheduler.schedule(builder.build())
-        Log.d("WIDGET UPDATE SERVICES", "Service Started!")
     }
 
-    fun sendUpdateStoryList(context: Context) {
+    private fun sendUpdateStoryList(context: Context) {
         val i = Intent(context, CollectionWidgetProvider::class.java)
         i.action = CollectionWidgetProvider.UPDATE_WIDGET
         context.sendBroadcast(i)
+    }
+
+    companion object {
+        const val JOB_ID = 2001
     }
 }

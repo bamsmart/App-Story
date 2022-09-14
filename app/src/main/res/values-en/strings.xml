@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Aplikasi Story</string>
+
+    <!--Register-->
+    <string name="signup">Register</string>
+    <string name="signup_message">Don\'t have an account yet? Let\'s Register</string>
+    <string name="error_format_email">The email format you entered is incorrect</string>
+    <string name="error_length_password">Panjang password minimal 6 karakter</string>
+    <string name="error_length_name">Password length is at least 6 characters</string>
+    <string name="title_signup_page">Fill in your data below</string>
+    <string name="login_name_input_hint">Enter full name</string>
+    <string name="login_email_input_hint">Enter email</string>
+    <string name="login_password_input_hint">Enter password</string>
+
+    <!--Login-->
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="message_login_page">Enter your data first</string>
+    <string name="title_login_page">Are you ready to upgrade your skills?</string>
+    <string name="name">Nama</string>
+    <string name="copyright">© 2022 ShineDev</string>
+    <string name="message_main_page">Happy Learning in Dicoding</string>
+    <string name="greeting">Hello %1$s,</string>
+    <string name="logout">Logout</string>
+
+    <!--Main Page-->
+    <string name="localization_setting">Localization Settings</string>
+    <string name="title_empty_data">Oops…!!! Data not available.</string>
+    <string name="desc_empty_data">Currently, the system cannot serve data. Relax, try again in a moment.</string>
+
+    <!--Story-->
+    <string name="add_story">Add Story</string>
+    <string name="list_story">List Story</string>
+    <string name="detail_story">Detail Story</string>
+
+    <!--Upload-->
+    <string name="camera">Camera</string>
+    <string name="gallery">Galeri</string>
+    <string name="upload">Upload</string>
+    <string name="text_upload_succeed">Story uploaded successfully!</string>
+    <string name="text_upload_failed">Failed to upload data</string>
+    <string name="image_view">Image</string>
+    <string name="image_preview">Story Image</string>
+    <string name="uploaded_at">Uploaded at %1$s</string>
+    <string name="type_story_description">Write your story today</string>
+
+    <string name="title_collection_widget">Application Story</string>
+
+    <string name="text_account_created">Account created, please login.</string>
+    <string name="text_account_error">Opps.... Error %s</string>
+    <string name="text_try_again">Try Again</string>
+    <string name="text_failed_take_photo">Gagal mengambil gambar.</string>
+    <string name="text_failed_switch_camera">Gagal memunculkan kamera.</string>
+    <string name="text_no_permission">Tidak mendapatkan permission.</string>
+    <string name="choose_image">"Pilih Gambar"</string>
+</resources>

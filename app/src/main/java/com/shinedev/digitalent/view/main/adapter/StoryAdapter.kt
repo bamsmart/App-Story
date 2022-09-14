@@ -16,8 +16,8 @@ import com.shinedev.digitalent.Transition.PROFILE
 import com.shinedev.digitalent.databinding.ItemStoryBinding
 import com.shinedev.digitalent.view.detail.DetailStoryActivity
 import com.shinedev.digitalent.view.detail.DetailStoryActivity.Companion.EXT_STORY_DATA
-import com.shinedev.digitalent.view.main.StoryResponse
-import com.shinedev.digitalent.view.withDateFormat
+import com.shinedev.digitalent.data.story.StoryResponse
+import com.shinedev.digitalent.common.withDateFormat
 
 class StoryAdapter(private val activity: Activity) :
     RecyclerView.Adapter<StoryAdapter.StoryViewHolder>() {

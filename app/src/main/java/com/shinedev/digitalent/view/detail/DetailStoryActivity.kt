@@ -2,17 +2,14 @@ package com.shinedev.digitalent.view.detail
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.shinedev.digitalent.R
-import com.shinedev.digitalent.ViewModelFactory
 import com.shinedev.digitalent.databinding.ActivityDetailStoryBinding
-import com.shinedev.digitalent.view.main.StoryResponse
-import com.shinedev.digitalent.view.withDateFormat
+import com.shinedev.digitalent.data.story.StoryResponse
+import com.shinedev.digitalent.common.withDateFormat
 
 class DetailStoryActivity : AppCompatActivity() {
-    lateinit var binding: ActivityDetailStoryBinding
-    lateinit var viewModel: DetailStoryViewModel
+    private lateinit var binding: ActivityDetailStoryBinding
 
     private var storyData: StoryResponse? = null
 
@@ -26,9 +23,6 @@ class DetailStoryActivity : AppCompatActivity() {
                 finish()
             }
         }
-        viewModel =
-            ViewModelProvider(this, ViewModelFactory())[DetailStoryViewModel::class.java]
-
         storyData = intent?.getParcelableExtra(EXT_STORY_DATA)
         setData(storyData)
     }

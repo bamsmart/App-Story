@@ -1,9 +1,9 @@
-package com.shinedev.digitalent.database
+package com.shinedev.digitalent.data.database
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.shinedev.digitalent.database.entity.StoryEntity
+import com.shinedev.digitalent.data.database.entity.StoryEntity
 
 class StoryConverter {
     @TypeConverter

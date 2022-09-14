@@ -1,11 +1,11 @@
-package com.shinedev.digitalent.view.login
+package com.shinedev.digitalent.data.login
 
 import com.google.gson.annotations.SerializedName
 import com.shinedev.digitalent.network.BaseResponse
 
 data class LoginResponse(
     @field:SerializedName("loginResult")
-    val result: LoginResult
+    val result: LoginResult? = null
 ) : BaseResponse()
 
 data class LoginResult(

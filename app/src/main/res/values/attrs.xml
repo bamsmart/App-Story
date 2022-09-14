@@ -6,9 +6,6 @@
         <attr name="helper" format="string" />
         <attr name="errorMessage" format="string" />
         <attr name="isFocusable" format="boolean" />
-        <attr name="primaryIcon" format="reference" />
-        <attr name="secondaryIcon" format="reference" />
-        <attr name="leadIcon" format="reference" />
         <attr name="startIcon" format="reference" />
         <attr name="android:text" />
         <attr name="android:inputType" />

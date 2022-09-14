@@ -18,7 +18,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
-import com.google.android.material.textfield.TextInputEditText
 import com.shinedev.digitalent.R
 import com.shinedev.digitalent.common.*
 import com.shinedev.digitalent.databinding.LayoutInputFieldBinding
@@ -99,15 +98,6 @@ class CustomTextInputField @JvmOverloads constructor(
         }
     }
 
-    fun setFieldClickListener(listener: () -> Unit) = with(binding) {
-        etInputText.apply {
-            isFocusable = false
-            setOnClickListener { listener() }
-        }
-    }
-
-    fun getInputEditText(): TextInputEditText = binding.etInputText
-
     fun getStringText(): String = binding.etInputText.text.toString()
 
     fun getIsValidValue(): Boolean = binding.tvError.text.toString().isEmpty()
@@ -169,21 +159,10 @@ class CustomTextInputField @JvmOverloads constructor(
         etInputText.setSelection(selectionStart, selectionEnd)
     }
 
-    fun setLeadIcon(@DrawableRes resId: Int, onCLick: () -> Unit) = with(binding) {
-        ivLeadIcon.show()
-        ivLeadIcon.setImageResource(resId)
-        ivLeadIcon.onClick { onCLick() }
-    }
 
     fun setPrimaryIcon(@DrawableRes resId: Int, onCLick: () -> Unit) = with(binding) {
         ivPrimary.setImageResource(resId)
         ivPrimary.onClick { onCLick() }
-    }
-
-    fun setSecondaryIcon(@DrawableRes resId: Int, onCLick: () -> Unit) = with(binding) {
-        ivSecondary.show()
-        ivSecondary.setImageResource(resId)
-        ivSecondary.onClick { onCLick() }
     }
 
     fun setImeOptions(option: Int) {
@@ -208,7 +187,7 @@ class CustomTextInputField @JvmOverloads constructor(
         super.onRestoreInstanceState(newState)
     }
 
-    override fun onSaveInstanceState(): Parcelable? {
+    override fun onSaveInstanceState(): Parcelable {
         return Bundle().apply {
             putParcelable(SUPER_STATE_KEY, super.onSaveInstanceState())
             putSparseParcelableArray(SPARSE_STATE_KEY, saveChildViewStates())

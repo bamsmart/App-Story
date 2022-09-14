@@ -1,9 +1,13 @@
 package com.shinedev.digitalent.view.main
 
 import androidx.lifecycle.*
-import com.shinedev.digitalent.database.entity.StoryEntity
+import com.shinedev.digitalent.data.story.ListStoryResponse
+import com.shinedev.digitalent.data.story.StoryResponse
+import com.shinedev.digitalent.data.database.entity.StoryEntity
+import com.shinedev.digitalent.domain.story.StoryApiService
+import com.shinedev.digitalent.domain.story.StoryRepository
 import com.shinedev.digitalent.network.NetworkBuilder
-import com.shinedev.digitalent.pref.AuthPreference
+import com.shinedev.digitalent.data.pref.AuthPreference
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
@@ -14,7 +18,7 @@ import retrofit2.Response
 class MainViewModel(private val pref: AuthPreference, private val repository: StoryRepository) :
     ViewModel() {
 
-    private val storyService = NetworkBuilder.createService(StoryService::class.java)
+    private val storyService = NetworkBuilder.createService(StoryApiService::class.java)
 
     private val _listStory = MutableLiveData<List<StoryResponse>>()
     val listStory: LiveData<List<StoryResponse>> = _listStory

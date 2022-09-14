@@ -14,9 +14,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/app_news"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/app_news"
         android:supportsRtl="true"
         android:theme="@style/MainAppTheme"
         tools:targetApi="31">
@@ -62,7 +62,7 @@
             android:exported="false" />
 
         <provider
-            android:name=".provider.StoryContentProvider"
+            android:name="com.shinedev.digitalent.data.provider.StoryContentProvider"
             android:authorities="com.shinedev.digitalent.story"
             android:enabled="true"
             android:exported="true"

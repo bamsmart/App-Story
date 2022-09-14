@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -17,11 +16,12 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.shinedev.digitalent.R
 import com.shinedev.digitalent.ViewModelWithPrefFactory
+import com.shinedev.digitalent.data.login.LoginRequest
+import com.shinedev.digitalent.data.pref.AuthPreference
+import com.shinedev.digitalent.data.pref.AuthPreference.Companion.AUTH_PREFERENCE
 import com.shinedev.digitalent.databinding.ActivityLoginBinding
-import com.shinedev.digitalent.pref.AuthPreference
-import com.shinedev.digitalent.pref.AuthPreference.Companion.AUTH_PREFERENCE
-import com.shinedev.digitalent.view.login.service.LoginRequest
 import com.shinedev.digitalent.view.main.MainActivity
 import com.shinedev.digitalent.view.register.RegisterActivity
 
@@ -37,14 +37,19 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val pref = AuthPreference.getInstance(dataStore)
-        viewModel =
-            ViewModelProvider(this, ViewModelWithPrefFactory(pref))[LoginViewModel::class.java]
-
+        setupViewModel()
         setupView()
         playAnimation()
         setupAction()
         observeData()
+    }
+
+    private fun setupViewModel() {
+        val pref = AuthPreference.getInstance(dataStore)
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelWithPrefFactory(pref)
+        )[LoginViewModel::class.java]
     }
 
     private fun setupView() {
@@ -70,7 +75,9 @@ class LoginActivity : AppCompatActivity() {
 
         btnLogin.setOnClickListener {
             btnLogin.setLoading(true)
-            viewModel.login(LoginRequest(email = "bamsmart.id@gmail.com", password = "kodok1234"))
+            val txtEmail = edLoginEmail.getStringText()
+            val txtPassword = edLoginPassword.getStringText()
+            viewModel.login(LoginRequest(email = txtEmail, password = txtPassword))
         }
         tvSignup.setOnClickListener {
             startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
@@ -83,46 +90,35 @@ class LoginActivity : AppCompatActivity() {
                 startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                 finish()
             } else {
-                Toast.makeText(this, "ada error nih ${it.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.text_account_error, it.message),
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
 
         viewModel.isValidInput.observe(this) {
-            Log.d("LoginActivity", "observe input $it")
             binding.btnLogin.isEnabled = it
         }
-
-
     }
 
 
-    private fun playAnimation() {
-        ObjectAnimator.ofFloat(binding.ivLogo, View.TRANSLATION_X, -30f, 30f).apply {
+    private fun playAnimation() = with(binding) {
+        ObjectAnimator.ofFloat(ivLogo, View.TRANSLATION_X, -30f, 30f).apply {
             duration = 6000
             repeatCount = ObjectAnimator.INFINITE
             repeatMode = ObjectAnimator.REVERSE
         }.start()
 
-        val title = ObjectAnimator.ofFloat(binding.tvTitle, View.ALPHA, 1f).setDuration(500)
-        val message = ObjectAnimator.ofFloat(binding.tvMessage, View.ALPHA, 1f).setDuration(500)
-        /*val emailTextView =
-            ObjectAnimator.ofFloat(binding.emailTextView, View.ALPHA, 1f).setDuration(500)
-        val emailEditTextLayout =
-            ObjectAnimator.ofFloat(binding.emailEditTextLayout, View.ALPHA, 1f).setDuration(500)*/
-       /* val passwordTextView =
-            ObjectAnimator.ofFloat(binding.passwordTextView, View.ALPHA, 1f).setDuration(500)
-        val passwordEditTextLayout =
-            ObjectAnimator.ofFloat(binding.passwordEditTextLayout, View.ALPHA, 1f).setDuration(500)*/
-        val login = ObjectAnimator.ofFloat(binding.btnLogin, View.ALPHA, 1f).setDuration(500)
+        val title = ObjectAnimator.ofFloat(tvTitle, View.ALPHA, 1f).setDuration(500)
+        val message = ObjectAnimator.ofFloat(tvMessage, View.ALPHA, 1f).setDuration(500)
+        val login = ObjectAnimator.ofFloat(btnLogin, View.ALPHA, 1f).setDuration(500)
 
         AnimatorSet().apply {
             playSequentially(
                 title,
                 message,
-                /* emailTextView,
-                 emailEditTextLayout,*/
-             /*   passwordTextView,
-                passwordEditTextLayout,*/
                 login
             )
             startDelay = 500

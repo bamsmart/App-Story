@@ -1,17 +1,17 @@
 package com.shinedev.digitalent.view.register
 
-import android.util.Log
 import androidx.lifecycle.*
+import com.shinedev.digitalent.data.register.RegisterRequest
 import com.shinedev.digitalent.network.BaseResponse
 import com.shinedev.digitalent.network.NetworkBuilder
-import com.shinedev.digitalent.view.login.service.UserAuthApi
+import com.shinedev.digitalent.domain.authorization.UserAuthApiService
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class RegisterViewModel : ViewModel() {
-    private val authService = NetworkBuilder.createService(UserAuthApi::class.java)
+    private val authService = NetworkBuilder.createService(UserAuthApiService::class.java)
 
     private val _result = MutableLiveData<BaseResponse>()
     val result: LiveData<BaseResponse> = _result
@@ -66,21 +66,12 @@ class RegisterViewModel : ViewModel() {
                     if (response.isSuccessful) {
                         _result.value = response.body()
                     } else {
-                        //Log.e(TAG, "onFailurex: ${response.message()}")
-                        /*val response = Gson().fromJson(
-                            response.errorBody().toString(),
-                            BaseResponse::class.java
-                        )*/
-
-                        Log.d("dd", "error body : ${response.toString()}")
-
-                        Log.d("dd", "error test: $response")
+                        _result.value = BaseResponse(error = true, message = response.message())
                     }
                 }
 
                 override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
                     _result.value = BaseResponse(error = true, message = t.message.toString())
-                    Log.e(TAG, "onFailure: ${t.message.toString()}")
                 }
 
             })
@@ -105,8 +96,16 @@ class RegisterViewModel : ViewModel() {
         isValidPassword: Boolean
     ) =
         isValidName && isValidEmail && isValidPassword
+}
 
-    companion object {
-        private const val TAG = "RegistrationViewModel"
+class RegisterViewModelFactory : ViewModelProvider.NewInstanceFactory() {
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return when {
+            modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
+                RegisterViewModel() as T
+            }
+            else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
+        }
     }
 }

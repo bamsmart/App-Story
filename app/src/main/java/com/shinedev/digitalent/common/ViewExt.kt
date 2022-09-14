@@ -39,11 +39,11 @@ inline fun EditText.onInputText(
 fun EditText.asFlowTextChanged(): Flow<CharSequence?> = callbackFlow {
     this@asFlowTextChanged.addTextChangedListener(object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
-            // noimplementation
+            // no implementation
         }
 
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            // noimplementation
+            // no implementation
         }
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {

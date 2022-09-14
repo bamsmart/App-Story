@@ -13,6 +13,7 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import com.shinedev.digitalent.R
 import com.shinedev.digitalent.common.createFile
 import com.shinedev.digitalent.databinding.ActivityCameraBinding
 import com.shinedev.digitalent.view.upload.UploadStoryActivity
@@ -67,16 +68,16 @@ class CameraActivity : AppCompatActivity() {
                 override fun onError(exc: ImageCaptureException) {
                     Toast.makeText(
                         this@CameraActivity,
-                        "Gagal mengambil gambar.",
+                        getString(R.string.text_failed_take_photo),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     val intent = Intent()
-                    intent.putExtra("picture", photoFile)
+                    intent.putExtra(PICTURE, photoFile)
                     intent.putExtra(
-                        "isBackCamera",
+                        BACK_CAMERA,
                         cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA
                     )
                     setResult(UploadStoryActivity.CAMERA_X_RESULT, intent)
@@ -111,7 +112,7 @@ class CameraActivity : AppCompatActivity() {
             } catch (exc: Exception) {
                 Toast.makeText(
                     this@CameraActivity,
-                    "Gagal memunculkan kamera.",
+                    getString(R.string.text_failed_switch_camera),
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -129,5 +130,10 @@ class CameraActivity : AppCompatActivity() {
             )
         }
         supportActionBar?.hide()
+    }
+
+    companion object {
+        const val PICTURE = "picture"
+        const val BACK_CAMERA = "isBackCamera"
     }
 }

@@ -1,4 +1,4 @@
-package com.shinedev.digitalent.pref
+package com.shinedev.digitalent.data.pref
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences

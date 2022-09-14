@@ -1,12 +1,13 @@
-package com.shinedev.digitalent.view.main
+package com.shinedev.digitalent.domain.story
 
 import com.shinedev.digitalent.network.BaseResponse
+import com.shinedev.digitalent.data.story.ListStoryResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
-interface StoryService {
+interface StoryApiService {
     @Multipart
     @POST("stories")
     fun addNewStory(

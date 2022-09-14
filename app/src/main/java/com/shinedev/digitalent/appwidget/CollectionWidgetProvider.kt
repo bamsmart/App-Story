@@ -27,10 +27,9 @@ class CollectionWidgetProvider : AppWidgetProvider() {
         for (appWidgetId in appWidgetIds) {
             val views = RemoteViews(
                 context.packageName,
-                R.layout.stories_widget
+                R.layout.widget_stories
             )
 
-            // click event handler for the title, launches the app when the user clicks on title
             val titleIntent = Intent(context, MainActivity::class.java)
             val titlePendingIntent = PendingIntent.getActivity(context, 0, titleIntent, 0)
             views.setOnClickPendingIntent(R.id.widgetTitleLabel, titlePendingIntent)
@@ -49,18 +48,9 @@ class CollectionWidgetProvider : AppWidgetProvider() {
         }
     }
 
-
-    fun sendRefreshBroadcast(context: Context) {
-        val intent = Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
-        intent.component = ComponentName(context, CollectionWidgetProvider::class.java)
-        context.sendBroadcast(intent)
-    }
-
-
     override fun onReceive(context: Context, intent: Intent) {
         val action = intent.action
         if (action == AppWidgetManager.ACTION_APPWIDGET_UPDATE) {
-            // refresh all your widgets
             val mgr = AppWidgetManager.getInstance(context)
             val cn = ComponentName(context, CollectionWidgetProvider::class.java)
             mgr.notifyAppWidgetViewDataChanged(mgr.getAppWidgetIds(cn), R.id.widgetListView)

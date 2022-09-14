@@ -3,18 +3,21 @@ package com.shinedev.digitalent.appwidget
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
+import android.graphics.Bitmap
 import android.os.Binder
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import androidx.core.os.bundleOf
+import com.bumptech.glide.Glide
 import com.shinedev.digitalent.R
-import com.shinedev.digitalent.database.entity.StoryEntity
-import com.shinedev.digitalent.provider.DatabaseContract
-import com.shinedev.digitalent.provider.DatabaseContract.getColumnString
-import com.shinedev.digitalent.view.main.StoryModel
+import com.shinedev.digitalent.data.database.entity.StoryEntity
+import com.shinedev.digitalent.data.provider.DatabaseContract
+import com.shinedev.digitalent.data.provider.DatabaseContract.getColumnString
+import com.shinedev.digitalent.data.story.StoryModel
+import com.shinedev.digitalent.common.withDateFormat
 
 
-class WidgetRemoteViewsFactory(private val mContext: Context, private val intent: Intent) :
+class WidgetRemoteViewsFactory(private val mContext: Context) :
     RemoteViewsService.RemoteViewsFactory {
 
     private val mWidgetItems = ArrayList<StoryModel>()
@@ -34,10 +37,12 @@ class WidgetRemoteViewsFactory(private val mContext: Context, private val intent
         mCursor?.count?.let { count ->
             for (i in 0 until count) {
                 mCursor.moveToPosition(i)
-                val title = getColumnString(mCursor, DatabaseContract.StoryColumns.TITLE)
+                val id = getColumnString(mCursor, DatabaseContract.StoryColumns.ID)
+                val name = getColumnString(mCursor, DatabaseContract.StoryColumns.NAME)
+                val desc = getColumnString(mCursor, DatabaseContract.StoryColumns.DESCRIPTION)
                 val image = getColumnString(mCursor, DatabaseContract.StoryColumns.IMAGE)
-                val model = StoryEntity(0, title, image)
-
+                val createdAt = getColumnString(mCursor, DatabaseContract.StoryColumns.CREATED_AT)
+                val model = StoryEntity(id, name, desc, image, createdAt, 0.0, 0.0)
                 try {
                     mWidgetItems.add(model)
                 } catch (e: Exception) {
@@ -52,8 +57,18 @@ class WidgetRemoteViewsFactory(private val mContext: Context, private val intent
 
     override fun getViewAt(position: Int): RemoteViews {
         val rv = RemoteViews(mContext.packageName, R.layout.collection_widget_list_item)
-        //rv.setImageViewBitmap(R.id.previewImageView, mWidgetItems[position])
-        rv.setTextViewText(R.id.widgetItemTaskNameLabel, mWidgetItems[position].title)
+        val bitmap: Bitmap = Glide.with(mContext)
+            .asBitmap()
+            .load(mWidgetItems[position].photoUrl)
+            .circleCrop()
+            .submit(48, 48)
+            .get()
+        rv.setImageViewBitmap(R.id.previewImageView, bitmap)
+        rv.setTextViewText(R.id.widgetItemNameLabel, mWidgetItems[position].name)
+        rv.setTextViewText(
+            R.id.widgetItemCreatedTimeLabel,
+            mWidgetItems[position].createdAt.withDateFormat()
+        )
 
         val extras = bundleOf(
             CollectionWidgetProvider.UPDATE_WIDGET to position

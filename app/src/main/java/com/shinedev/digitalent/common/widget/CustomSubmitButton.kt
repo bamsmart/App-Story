@@ -30,7 +30,7 @@ class CustomSubmitButton @JvmOverloads constructor(
 
     private val progressDrawableCallback: Drawable.Callback = object : Drawable.Callback {
         override fun unscheduleDrawable(who: Drawable, what: Runnable) {
-            // noimplementation
+            // no implementation
         }
 
         override fun invalidateDrawable(who: Drawable) {
@@ -38,7 +38,7 @@ class CustomSubmitButton @JvmOverloads constructor(
         }
 
         override fun scheduleDrawable(who: Drawable, what: Runnable, `when`: Long) {
-            // noimplementation
+            // no implementation
         }
     }
 
@@ -62,6 +62,4 @@ class CustomSubmitButton @JvmOverloads constructor(
             text = savedButtonText
         }
     }
-
-    fun isLoading(): Boolean = isLoading
 }

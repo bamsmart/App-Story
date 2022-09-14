@@ -1,4 +1,4 @@
-package com.shinedev.digitalent.view.login.service
+package com.shinedev.digitalent.data.login
 
 data class LoginRequest(
     val email: String,

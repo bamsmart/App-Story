@@ -1,11 +1,11 @@
 package com.shinedev.digitalent.view.login
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.shinedev.digitalent.network.NetworkBuilder
-import com.shinedev.digitalent.pref.AuthPreference
-import com.shinedev.digitalent.view.login.service.LoginRequest
-import com.shinedev.digitalent.view.login.service.UserAuthApi
+import com.shinedev.digitalent.data.pref.AuthPreference
+import com.shinedev.digitalent.data.login.LoginRequest
+import com.shinedev.digitalent.data.login.LoginResponse
+import com.shinedev.digitalent.domain.authorization.UserAuthApiService
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -14,7 +14,7 @@ import retrofit2.Response
 
 class LoginViewModel(private val pref: AuthPreference) : ViewModel() {
 
-    private val authService = NetworkBuilder.createService(UserAuthApi::class.java)
+    private val authService = NetworkBuilder.createService(UserAuthApiService::class.java)
 
     private val _result = MutableLiveData<LoginResponse>()
     val result: LiveData<LoginResponse> = _result
@@ -65,13 +65,11 @@ class LoginViewModel(private val pref: AuthPreference) : ViewModel() {
                                 }
                             }
                         }
-                    } else {
-                        Log.e(TAG, "error")
                     }
                 }
 
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                    Log.e(TAG, "error")
+                    // not implemented
                 }
             })
         }
@@ -87,8 +85,4 @@ class LoginViewModel(private val pref: AuthPreference) : ViewModel() {
 
     private fun checkFormInput(isValidEmail: Boolean, isValidPassword: Boolean) =
         isValidEmail && isValidPassword
-
-    companion object {
-        private const val TAG = "LoginViewModel"
-    }
 }

@@ -8,7 +8,6 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -20,13 +19,16 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
+import com.shinedev.digitalent.R
 import com.shinedev.digitalent.ViewModelWithPrefFactory
 import com.shinedev.digitalent.common.reduceFileImage
 import com.shinedev.digitalent.common.rotateBitmap
 import com.shinedev.digitalent.common.uriToFile
+import com.shinedev.digitalent.data.pref.AuthPreference
 import com.shinedev.digitalent.databinding.ActivityUploadStoryBinding
-import com.shinedev.digitalent.pref.AuthPreference
 import com.shinedev.digitalent.view.camera.CameraActivity
+import com.shinedev.digitalent.view.camera.CameraActivity.Companion.BACK_CAMERA
+import com.shinedev.digitalent.view.camera.CameraActivity.Companion.PICTURE
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -38,7 +40,6 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 
 class UploadStoryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUploadStoryBinding
-    private lateinit var currentPhotoPath: String
 
     private var getFile: File? = null
 
@@ -63,14 +64,19 @@ class UploadStoryActivity : AppCompatActivity() {
                 REQUEST_CODE_PERMISSIONS
             )
         }
+
+        setupViewModel()
+        setupAction()
+        observeData()
+    }
+
+    private fun setupViewModel() {
         val pref = AuthPreference.getInstance(dataStore)
         viewModel =
             ViewModelProvider(
                 this,
                 ViewModelWithPrefFactory(pref)
             )[UploadStoryViewModel::class.java]
-        setupAction()
-        observeData()
     }
 
     private fun observeData() = with(binding) {
@@ -88,7 +94,6 @@ class UploadStoryActivity : AppCompatActivity() {
             }
             enableUpload.observe(owner) {
                 it?.let { enable ->
-                    Log.d("xxx", "isEnable = $enable")
                     uploadButton.isEnabled = enable
                 }
             }
@@ -97,16 +102,16 @@ class UploadStoryActivity : AppCompatActivity() {
                     if (!result.error) {
                         Toast.makeText(
                             this@UploadStoryActivity,
-                            "Story berhasil dibuat",
+                            getString(R.string.text_upload_succeed),
                             Toast.LENGTH_LONG
                         ).show()
                         finish()
                     } else {
                         uploadButton.setLoading(false)
                         val snackBar = Snackbar.make(
-                            binding.root, "Gagal mengupload data",
+                            binding.root, getString(R.string.text_upload_failed),
                             Snackbar.LENGTH_LONG
-                        ).setAction("Action", null)
+                        ).setAction(getString(R.string.text_try_again), null)
                         snackBar.setActionTextColor(Color.RED)
 
                         val snackBarView = snackBar.view
@@ -142,7 +147,7 @@ class UploadStoryActivity : AppCompatActivity() {
             if (!allPermissionsGranted()) {
                 Toast.makeText(
                     this,
-                    "Tidak mendapatkan permission.",
+                    getString(R.string.text_no_permission),
                     Toast.LENGTH_SHORT
                 ).show()
                 finish()
@@ -163,7 +168,7 @@ class UploadStoryActivity : AppCompatActivity() {
         val intent = Intent()
         intent.action = Intent.ACTION_GET_CONTENT
         intent.type = "image/*"
-        val chooser = Intent.createChooser(intent, "Choose a Picture")
+        val chooser = Intent.createChooser(intent, getString(R.string.choose_image))
         launcherIntentGallery.launch(chooser)
     }
 
@@ -171,8 +176,8 @@ class UploadStoryActivity : AppCompatActivity() {
         ActivityResultContracts.StartActivityForResult()
     ) {
         if (it.resultCode == CAMERA_X_RESULT) {
-            val myFile = it.data?.getSerializableExtra("picture") as File
-            val isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
+            val myFile = it.data?.getSerializableExtra(PICTURE) as File
+            val isBackCamera = it.data?.getBooleanExtra(BACK_CAMERA, true) as Boolean
 
             getFile = myFile
             val result = rotateBitmap(
