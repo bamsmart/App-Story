@@ -8,9 +8,9 @@ import android.provider.BaseColumns
 object DatabaseContract {
     const val TABLE_STORY = "story"
     const val CONTENT_AUTHORITY_STORY = "com.shinedev.digitalent.story"
-    const val SCHEME = "content"
+    private const val SCHEME = "content"
 
-    val CONTENT_URI_STORY = Uri.Builder().scheme(SCHEME)
+    val CONTENT_URI_STORY: Uri = Uri.Builder().scheme(SCHEME)
         .authority(CONTENT_AUTHORITY_STORY)
         .appendPath(TABLE_STORY)
         .build()
@@ -36,7 +36,6 @@ object DatabaseContract {
     }
 
     object StoryColumns : BaseColumns {
-        const val ID = "id"
         const val TITLE = "title"
         const val IMAGE = "photo_url"
     }
