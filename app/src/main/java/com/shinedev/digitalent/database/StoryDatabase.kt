@@ -4,14 +4,19 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.shinedev.digitalent.database.dao.StoryDao
 import com.shinedev.digitalent.database.entity.StoryEntity
+import kotlinx.coroutines.CoroutineScope
 
 @Database(
     version = 1,
     entities = [
         StoryEntity::class],
     exportSchema = true
+)
+@TypeConverters(
+    StoryConverter::class
 )
 
 abstract class StoryDatabase : RoomDatabase() {

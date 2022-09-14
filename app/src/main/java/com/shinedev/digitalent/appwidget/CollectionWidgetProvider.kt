@@ -35,7 +35,6 @@ class CollectionWidgetProvider : AppWidgetProvider() {
             val titlePendingIntent = PendingIntent.getActivity(context, 0, titleIntent, 0)
             views.setOnClickPendingIntent(R.id.widgetTitleLabel, titlePendingIntent)
 
-
             val intent = Intent(context, WidgetRemoteViewsService::class.java)
             views.setRemoteAdapter(R.id.widgetListView, intent)
 

@@ -4,11 +4,15 @@ import android.app.job.JobParameters
 import android.app.job.JobService
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
+import android.graphics.Bitmap
 import android.util.Log
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class UpdateWidgetService : JobService() {
+    private val mWidgetItems: List<Bitmap> = ArrayList()
+
     override fun onStartJob(params: JobParameters): Boolean {
         val widgetManager = AppWidgetManager.getInstance(this)
         val ids = AppWidgetManager.getInstance(application).getAppWidgetIds(
