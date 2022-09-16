@@ -11,9 +11,9 @@ object NetworkBuilder {
     private fun setupRetrofit(): Retrofit {
         val loggingInterceptor = HttpLoggingInterceptor().also {
             if (BuildConfig.DEBUG) {
-                HttpLoggingInterceptor.Level.BODY
+                it.setLevel(HttpLoggingInterceptor.Level.BODY)
             } else {
-                HttpLoggingInterceptor.Level.NONE
+                it.setLevel(HttpLoggingInterceptor.Level.NONE)
             }
         }
 
