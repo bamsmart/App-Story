@@ -6,6 +6,12 @@
         android:icon="@drawable/ic_baseline_settings_24"
         android:title="@string/localization_setting"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_map"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="@string/map_view"
+        app:showAsAction="never" />
     <item
         android:id="@+id/action_logout"
         android:icon="@android:drawable/sym_call_outgoing"

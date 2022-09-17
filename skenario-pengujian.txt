@@ -1,0 +1,158 @@
+Skenario Pengujian:
+
+ViewModel:
+- Register:
+		- Ketika berhasil melakukan register
+			- Memastikan api register terpanggil
+         	- Memastikan mengembalikan DataResult.Success.
+		- Ketika gagal melakikan register
+			- Memastikan api login terpanggil
+			- Memastikan mengembalikan DataResult.Error
+
+- Login:
+		- Ketika berhasil melakukan login
+       		- Memastikan api register terpanggil
+			- Memastikan response tidak null.
+			- Memastikan mengembalikan DataResult.Success.
+
+		- Ketika gagal melakikan login
+			- Memastikan api login terpanggil
+			- Memastikan mengembalikan DataResult.Error
+
+- Story
+	- Ketika berhasil memuat data story.
+			- Memastikan api story terpanggil
+			- Memastikan mengembalikan DataResult.isSuccess.
+			- Memastikan data tidak null.
+			- Memastikan jumlah data sesuai dengan yang diharapkan.
+
+	- Ketika gagal memuat data story.
+			- Memastikan api story terpanggil
+			- Memastikan mengembalikan DataResult.Error.
+- Upload
+	- Ketika berhasil mengupload data story.
+			- Memastikan api add-story terpanggil
+			- Memastikan response tidak null.
+			- Memastikan mengembalikan DataResult.Success.
+
+	- Ketika gagal memuat data story.
+			- Memastikan api add-story terpanggil
+			- Memastikan response tidak null.
+			- Memastikan mengembalikan DataResult.Error.
+
+- Maps
+	- Ketika berhasil memuat data story di map.
+			- Memastikan api story terpanggil
+			- Memastikan mengembalikan DataResult.isSuccess.
+			- Memastikan data tidak null.
+			- Memastikan jumlah data sesuai dengan yang diharapkan.
+
+	- Ketika gagal memuat data story di map.
+			- Memastikan api story terpanggil
+			- Memastikan mengembalikan DataResult.Error.
+
+====================================================================================================
+Repository:
+- Story
+    - Ketika gagal memuat data story.
+			- Memastikan mengembalikan Result.isFailure.
+
+	- Ketika berhasil memuat data story.
+	        - Memastikan mengembalikan Result.isSuccess.
+			- Memastikan data tidak null.
+			- Memastikan data sesuai dengan yang diharapkan.
+
+    - Ketika berhasil memuat paging data story.
+	        - Memastikan mengembalikan Result.isSuccess.
+			- Memastikan data tidak null.
+			- Memastikan data sesuai dengan yang diharapkan.
+
+	- Ketika berhasil mengupload data story.
+			- Memastikan response tidak null.
+			- Memastikan mengembalikan Result.isSuccess.
+
+	- Ketika gagal mengupload data story.
+			- Memastikan response tidak null.
+			- Memastikan mengembalikan Result.isFailure.
+
+- Authorize
+	- Ketika berhasil register.
+	        - Memastikan api register dipanggil
+			- Memastikan response tidak null.
+			- Memastikan mengembalikan Result.isSuccess.
+
+	- Ketika gagal register.
+			- Memastikan response tidak null.
+			- Memastikan mengembalikan Result.isFailure.
+
+	- Ketika berhasil login.
+    	        - Memastikan api login dipanggil
+    			- Memastikan response tidak null.
+    			- Memastikan mengembalikan Result.isSuccess.
+
+    - Ketika gagal login.
+                - Memastikan api login dipanggil
+    			- Memastikan response tidak null.
+    			- Memastikan mengembalikan Result.isFailure.
+
+====================================================================================================
+End-end Test:
+- Utils
+    - Memastikan format tanggal sesuai dengan yang diharapkan
+    - Memastikan jika input tanggal tidak sesuai format, maka akan dikembalikan tanggal tanpa pemformatan
+    - Memastikan jika zona waktu tidak sesuai terdaftar, maka akan dikembalikan tanggal tanpa pemformatan
+- Database
+    - Ketika berhasil menyimpan data
+        - Memastikan data saat ini sesuai dengan yg diharapkan
+    - Ketika berhasil menghapus data
+        - Memastikan data menjadi kosong
+- Story
+    - Ketika gagal memuat data story
+        - Memastikan informasi data tidak dapat memuat data ditampilkan
+    - Ketika data story kosong
+        - Memastikan informasi data tidak dapat memuat data ditampilkan
+    - Ketika berhasil memuat data story dan datanya tidak kosong
+        - Memastikan komponen recyclerview tampil
+        - Memastikan data yang diharapkan tertampil
+        - Memastikan data selanjutnya yang diharapkan juga tertampil
+
+- Login
+    - Ketika error email
+        - Memastikan pesan error email tertampil
+        - Memastikan tombol login disabled
+    - Ketika error password
+        - Memastikan pesan error password tertampil
+        - Memastikan tombol login disabled
+    - Ketika gagal login
+         - Memastikan email diinput dengan benar
+         - Memastikan password diinput dengan benar
+         - Memastikan tombol login enabled
+         - Memastikan mendapatkan pesan gagal login
+         - Memastikan tidak berpindah halaman
+    - Ketika berhasil login
+        - Memastikan email diinput dengan benar
+        - Memastikan password diinput dengan benar
+        - Memastikan tombol login enabled
+        - Memastikan diarahkan ke halaman home
+- Register
+    - Ketika error nama
+        - Memastikan pesan error nama tertampil
+        - Memastikan tombol daftar disabled
+    - Ketika error email
+        - Memastikan pesan error email tertampil
+        - Memastikan tombol daftar disabled
+    - Ketika error password
+        - Memastikan pesan error password tertampil
+        - Memastikan tombol daftar disabled
+    - Ketika gagal register
+         - Memastikan nama diinput dengan benar
+         - Memastikan email diinput dengan benar
+         - Memastikan password diinput dengan benar
+         - Memastikan tombol daftar enabled
+         - Memastikan mendapatkan pesan gagal daftar
+         - Memastikan tidak berpindah halaman
+    - Ketika berhasil register
+        - Memastikan email diinput dengan benar
+        - Memastikan password diinput dengan benar
+        - Memastikan tombol daftar enabled
+        - Memastikan mendapatkan pesan berhasil daftar

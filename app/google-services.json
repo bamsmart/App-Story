@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "912484281918",
+    "project_id": "storyapps-956a6",
+    "storage_bucket": "storyapps-956a6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:912484281918:android:904f1bfe08f7e04d39ab6f",
+        "android_client_info": {
+          "package_name": "com.shinedev.digitalent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "912484281918-e0gksa1tfvi7ipnesoi7g1l8j2am2bj9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shinedev.digitalent",
+            "certificate_hash": "3a5e1791a09bb4531a55d7ec9679cbf16a0a67f2"
+          }
+        },
+        {
+          "client_id": "912484281918-ntulb9vgjujatl0q3l2t92fvvehok50k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "YOUR_MAPS_API_KEY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "912484281918-ntulb9vgjujatl0q3l2t92fvvehok50k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

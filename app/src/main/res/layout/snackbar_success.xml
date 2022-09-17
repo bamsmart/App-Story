@@ -1,0 +1,45 @@
+<merge>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/snackbar_success_section"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:background="@color/colorGreenTransparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/tv_snackbar_success"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textAlignment="center"
+            android:textColor="@color/colorGreenLeave"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/iv_snackbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@tools:sample/lorem" />
+
+        <ImageView
+            android:id="@+id/iv_snackbar"
+            style="@style/Headline3"
+            android:layout_width="wrap_content"
+            android:layout_height="46dp"
+            android:clickable="true"
+            android:contentDescription="@string/text_close"
+            android:focusable="true"
+            android:paddingHorizontal="@dimen/space_medium"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_snackbar_success"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_close_green"
+            app:tint="@color/colorGreenLeave" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</merge>

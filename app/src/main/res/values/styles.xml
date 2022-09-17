@@ -25,10 +25,6 @@
         <item name="android:navigationBarColor">#000</item>
     </style>
 
-    <style name="PrimaryAppBarLayout" parent="Widget.MaterialComponents.AppBarLayout.Primary">
-        <item name="android:background">?attr/colorSurface</item>
-    </style>
-
     <style name="Headline3" parent="TextAppearance.MaterialComponents.Headline3">
         <item name="android:textSize">18sp</item>
         <item name="fontFamily">@font/lufga_bold_700</item>
@@ -57,23 +53,8 @@
         <item name="elevation">0dp</item>
     </style>
 
-    <style name="ButtonBigPrimaryLight" parent="ButtonBigPrimary">
-        <item name="backgroundTint">@color/bg_button_primary_lighter_color</item>
-        <item name="rippleColor">@color/colorPrimaryLight</item>
-        <item name="android:textColor">@color/colorPrimary</item>
-    </style>
-
     <style name="roundedImageView" parent="">
         <item name="cornerSize">50%</item>
     </style>
 
-    <style name="Widget.Appstory.AppWidget.Container" parent="android:Widget">
-        <item name="android:id">@android:id/background</item>
-        <item name="android:background">?android:attr/colorBackground</item>
-    </style>
-
-    <style name="Widget.Appstory.AppWidget.InnerView" parent="android:Widget">
-        <item name="android:background">?android:attr/colorBackground</item>
-        <item name="android:textColor">?android:attr/textColorPrimary</item>
-    </style>
 </resources>

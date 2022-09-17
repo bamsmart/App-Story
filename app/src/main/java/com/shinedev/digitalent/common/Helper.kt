@@ -1,18 +1,16 @@
 package com.shinedev.digitalent.common
 
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.util.*
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
-fun String.withDateFormat(): String {
-    return try {
-        val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
-        val date = format.parse(this) as Date
+object DateFormatter {
 
-        val textDate = DateFormat.getDateInstance(DateFormat.FULL).format(date)
-        val textTime = SimpleDateFormat("HH:mm:ss.SS", Locale.US).format(date)
-        "$textDate $textTime"
-    } catch (e: Exception) {
-        this
+    fun formatDate(currentDateString: String, targetTimeZone: String): String {
+        val instant = Instant.parse(currentDateString)
+        val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.LONG)
+            .withZone(ZoneId.of(targetTimeZone))
+        return formatter.format(instant)
     }
 }

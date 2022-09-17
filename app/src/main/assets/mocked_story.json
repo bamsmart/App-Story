@@ -1,0 +1,24 @@
+{
+    "error": false,
+    "message": "Stories fetched successfully",
+    "listStory": [
+        {
+            "id": "story-iDx",
+            "name": "Bjorka",
+            "description": "Quality",
+            "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1663678564288_AwsEE0tC.jpg",
+            "createdAt": "2022-09-20T12:56:04.289Z",
+            "lat": -6.990990990990991,
+            "lon": 110.44272999572765
+        },
+        {
+            "id": "story-wwuiLWNVe8A7Uy5P",
+            "name": "Bams",
+            "description": "Bebeck",
+            "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1663658539115_1Y0qQn7l.jpg",
+            "createdAt": "2022-09-20T07:22:19.116Z",
+            "lat": -6.990990990990991,
+            "lon": 110.44272999572765
+        }
+    ]
+}

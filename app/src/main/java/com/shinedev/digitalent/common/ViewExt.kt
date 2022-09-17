@@ -1,5 +1,6 @@
 package com.shinedev.digitalent.common
 
+import android.animation.ObjectAnimator
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -53,4 +54,11 @@ fun EditText.asFlowTextChanged(): Flow<CharSequence?> = callbackFlow {
     awaitClose {
         // do nothing
     }
+}
+
+fun View.animateVisibility(isVisible: Boolean, duration: Long = 400) {
+    ObjectAnimator
+        .ofFloat(this, View.ALPHA, if (isVisible) 1f else 0f)
+        .setDuration(duration)
+        .start()
 }

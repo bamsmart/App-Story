@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="space_extra_small">2dp</dimen>
     <dimen name="space_small">4dp</dimen>
-    <dimen name="space_small_medium">8dp</dimen>
     <dimen name="space_medium">12dp</dimen>
-    <dimen name="space_medium_large">16dp</dimen>
-    <dimen name="space_large">18dp</dimen>
-    <dimen name="space_extra_large">24dp</dimen>
 </resources>
